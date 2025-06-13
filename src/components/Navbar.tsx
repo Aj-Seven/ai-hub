@@ -10,7 +10,12 @@ import {
 } from "lucide-react";
 import { apiClient } from "@/lib/api-client";
 import { Label } from "@/components/ui/label";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import Settings from "./Settings";
 import Link from "next/link";
 
@@ -89,6 +94,7 @@ export default function Navbar() {
 
             {/* Settings Drawer Trigger */}
             <Drawer>
+              <DrawerTitle></DrawerTitle>
               <DrawerTrigger asChild>
                 <button
                   aria-label="Settings"
