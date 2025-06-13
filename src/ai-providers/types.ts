@@ -1,4 +1,9 @@
-export type AIProvider = "openai" | "anthropic" | "google" | "cohere";
+export type AIProvider =
+  | "openai"
+  | "anthropic"
+  | "google"
+  | "cohere"
+  | "huggingface";
 
 export interface AIRequest {
   prompt: string;

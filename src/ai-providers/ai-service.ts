@@ -1,4 +1,4 @@
-import { AIProvider, AIRequest, AIResponse, ProviderConfig } from "./types";
+import { AIProvider, AIRequest, AIResponse } from "./types";
 import { OpenAIProvider } from "./providers/OpenAIProvider";
 import { AnthropicProvider } from "./providers/AnthropicProvider";
 import { GoogleProvider } from "./providers/GoogleProvider";
