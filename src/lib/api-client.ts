@@ -26,6 +26,11 @@ export interface GenerateResponse {
   details?: string;
 }
 
+type Provider = {
+  value: string;
+  label: string;
+};
+
 class APIClient {
   private baseURL: string;
 
@@ -92,10 +97,10 @@ class APIClient {
     success: boolean;
     status?: string;
     providers?: string[];
-    aiProviders?: { label: string; value: string }[];
+    aiProviders?: Provider[];
     error?: string;
   }> {
-    const aiProviders: { label: string; value: string }[] = [
+    const aiProviders: Provider[] = [
       { label: "OpenAI", value: "openai" },
       { label: "Anthropic Claude", value: "anthropic" },
       { label: "Google Gemini", value: "google" },

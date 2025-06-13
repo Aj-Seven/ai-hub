@@ -38,7 +38,7 @@ import { toolConfigs } from "@/app/tools/_components/ToolConfig";
 export default function ToolPage() {
   const params = useParams();
   const router = useRouter();
-  const toolId = params.tool as any;
+  const toolId = params?.tool as any;
 
   const [input, setInput] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
@@ -48,7 +48,12 @@ export default function ToolPage() {
   const [isCopied, setIsCopied] = useState(false);
   const [usage, setUsage] = useState<any>(null);
   const [apiKey, setApiKey] = useState("");
-  const [availableProviders, setAvailableProviders] = useState<string[]>([]);
+  type Provider = {
+    label: string;
+    value: string;
+  };
+
+  const [availableProviders, setAvailableProviders] = useState<Provider[]>([]);
 
   const toolConfig = toolConfigs[toolId];
 
@@ -56,18 +61,24 @@ export default function ToolPage() {
     try {
       const response = await apiClient.getStatus();
 
-      if (response.success) {
-        setAvailableProviders((response.aiProviders as any) || []);
+      if (response.success && response.providers && response.aiProviders) {
+        const filteredProviders: Provider[] = response.aiProviders.filter((p) =>
+          response.providers?.includes(p.value)
+        );
+
+        setAvailableProviders(filteredProviders);
+      } else {
+        setAvailableProviders([]);
       }
     } catch (error) {
       console.error("Failed to check API status:", error);
+      setAvailableProviders([]);
     }
   };
 
   useEffect(() => {
     checkApiStatus();
   }, []);
-
   useEffect(() => {
     const key = localStorage.getItem(`api_key_${selectedProvider}`);
     setApiKey(key as string);
@@ -311,12 +322,12 @@ export default function ToolPage() {
                         <SelectValue placeholder="Select AI provider" />
                       </SelectTrigger>
                       <SelectContent>
-                        {availableProviders.map((providers) => (
+                        {availableProviders.map((provider) => (
                           <SelectItem
-                            key={providers.value}
-                            value={providers.value}
+                            key={provider.value}
+                            value={provider.value}
                           >
-                            {providers.label}
+                            {provider.label}
                           </SelectItem>
                         ))}
                       </SelectContent>
