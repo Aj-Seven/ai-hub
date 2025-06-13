@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system">
+        <ThemeProvider attribute="class" defaultTheme="light">
           <Navbar />
           {children}
           <Footer />
