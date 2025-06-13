@@ -1,36 +1,41 @@
 import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "AI Hub - Content Creation Platform",
-  description:
-    "Powerful AI tools for email writing, tweet generation, grammar checking, and more. Create professional content in seconds.",
-  keywords:
-    "AI writing, email generator, tweet generator, grammar checker, content creation, copywriting",
-};
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light">
-      <html lang="en">
-        <body className={inter.className}>
+    <html lang="en">
+      <head>
+        <meta charSet="UTF-8" />
+        <meta name="author" content="Aj7" />
+        <title>AI Hub - Content Creation Platform</title>
+        <meta
+          name="description"
+          content="Powerful AI tools for email writing, tweet generation, grammar checking, and more. Create professional content in seconds."
+        />
+        <meta
+          property="og:title"
+          content="AI Hub - Content Creation Platform"
+        />
+        <meta
+          property="og:description"
+          content="Powerful AI tools for email writing, tweet generation, grammar checking, and more. Create professional content in seconds."
+        />
+        <meta
+          name="viewport"
+          content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0"
+        />
+      </head>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
           <Navbar />
           {children}
           <Footer />
           <Toaster />
-        </body>
-      </html>
-    </ThemeProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

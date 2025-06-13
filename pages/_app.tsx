@@ -1,8 +1,9 @@
-import { Children } from 'react'
-import '../src/app/globals.css'
+"use client";
 
-function MyApp() {
-  return Children
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
 }
-
-export default MyApp
