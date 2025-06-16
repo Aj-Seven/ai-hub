@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Summarize an Article",
+    "description": "Summarize an article in bullet points.",
+    "category": "Writing",
+    "prompt": "Summarize this article in 5 concise bullet points:\n\n{{paste article here}}"
+  },
+  {
+    "title": "Email",
+    "description": "Generate a email for outreach.",
+    "category": "Email",
+    "prompt": "Write a professional email introducing our AI tool to a lead."
+  },
+  {
+    "title": "Translate to French",
+    "description": "Translate any text into French.",
+    "category": "Translation",
+    "prompt": "Translate the following text to French:\n\n{{your text here}}"
+  },
+  {
+    "title": "Engaging Tweet",
+    "description": "Craft a viral tweet about AI.",
+    "category": "Social Media",
+    "prompt": "Write a witty tweet about AI and productivity."
+  },
+  {
+    "title": "Product Description",
+    "description": "Write an e-commerce product description.",
+    "category": "Marketing",
+    "prompt": "Describe a wireless noise-canceling headphone for an online store."
+  },
+  {
+    "title": "Blog Outline",
+    "description": "Create a structured blog outline.",
+    "category": "Writing",
+    "prompt": "Generate a blog post outline for: 'Top AI Writing Tools in 2025'"
+  }
+]
