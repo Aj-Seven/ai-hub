@@ -34,6 +34,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { toolConfigs } from "@/app/tools/_components/ToolConfig";
+import Tips from "../_components/Tips";
 
 export default function ToolPage() {
   const params = useParams();
@@ -92,7 +93,7 @@ export default function ToolPage() {
 
   if (!toolConfig) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-slate-900 mb-4">
@@ -225,9 +226,9 @@ export default function ToolPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-40">
+      <header className="border-b backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-3">
           <div className="flex items-center min-h-[72px]">
             <div className="flex items-center space-x-4">
@@ -237,9 +238,7 @@ export default function ToolPage() {
 
               <div className="flex flex-col">
                 <div className="flex items-center space-x-2 flex-wrap">
-                  <h1 className="text-xl font-semibold text-slate-900">
-                    {toolConfig.title}
-                  </h1>
+                  <h1 className="text-xl font-semibold">{toolConfig.title}</h1>
                   {selectedProvider && (
                     <Badge variant="outline" className="text-xs">
                       <Zap className="h-3 w-3 mr-1" />
@@ -248,7 +247,7 @@ export default function ToolPage() {
                   )}
                 </div>
 
-                <p className="text-sm text-slate-600 line-clamp-1 max-w-[90vw] sm:max-w-none">
+                <p className="text-sm line-clamp-1 max-w-[90vw] sm:max-w-none">
                   {toolConfig.description}
                 </p>
               </div>
@@ -261,7 +260,7 @@ export default function ToolPage() {
       <div className="max-w-6xl mx-auto px-3 py-2">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Input Section */}
-          <Card className="bg-white/60 backdrop-blur-sm border-1">
+          <Card className="border-1">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Send className="h-5 w-5 text-blue-600" />
@@ -279,8 +278,7 @@ export default function ToolPage() {
                   placeholder={toolConfig.inputPlaceholder}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  rows={6}
-                  className="resize-none"
+                  className="resize-none h-30"
                 />
               </div>
               <div className="flex flex-row space-x-2">
@@ -358,7 +356,7 @@ export default function ToolPage() {
           </Card>
 
           {/* Output Section */}
-          <Card className="bg-white/60 backdrop-blur-sm border-1">
+          <Card className="border-1">
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
@@ -367,12 +365,7 @@ export default function ToolPage() {
                 </div>
                 {output && (
                   <div className="flex items-center space-x-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={handleCopy}
-                      className="text-slate-600 hover:text-slate-900"
-                    >
+                    <Button variant="outline" size="sm" onClick={handleCopy}>
                       {isCopied ? (
                         <>
                           <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
@@ -389,7 +382,6 @@ export default function ToolPage() {
                       variant="outline"
                       size="sm"
                       onClick={handleDownload}
-                      className="text-slate-600 hover:text-slate-900"
                     >
                       <Download className="h-4 w-4 mr-2" />
                       Download
@@ -404,18 +396,18 @@ export default function ToolPage() {
             <CardContent>
               {output ? (
                 <div className="space-y-4">
-                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 min-h-[400px]">
-                    <pre className="whitespace-pre-wrap text-sm text-slate-800 font-medium leading-relaxed">
+                  <div className="rounded-lg p-4 border min-h-[400px]">
+                    <pre className="whitespace-pre-wrap text-sm font-medium leading-relaxed">
                       {output}
                     </pre>
                   </div>
 
                   {usage && (
-                    <div className="bg-blue-50 rounded-lg p-2 border border-blue-200">
-                      <h4 className="text-sm font-semibold text-blue-900 mb-2">
+                    <div className="bg-blue-100 rounded-lg p-2 border border-blue-200">
+                      <h4 className="font-semibold text-blue-900 mb-2">
                         Usage Statistics
                       </h4>
-                      <div className="grid grid-cols-3 gap-4 text-xs text-blue-800">
+                      <div className="grid grid-cols-3 gap-4 text-sm text-blue-800">
                         <div>
                           <span className="font-medium">Prompt:</span>{" "}
                           {usage.promptTokens} tokens
@@ -433,7 +425,7 @@ export default function ToolPage() {
                   )}
                 </div>
               ) : (
-                <div className="bg-slate-50 rounded-lg p-8 border border-dashed border-slate-300 min-h-[400px] flex items-center justify-center">
+                <div className="rounded-lg p-8 border border min-h-[200px] flex items-center justify-center">
                   <div className="text-center text-slate-500">
                     <Sparkles className="h-12 w-12 mx-auto mb-4 text-slate-400" />
                     <p className="text-lg font-medium mb-2">
@@ -449,44 +441,7 @@ export default function ToolPage() {
             </CardContent>
           </Card>
         </div>
-
-        {/* Tips Section */}
-        <Card className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2 text-blue-900">
-              <Sparkles className="h-5 w-5" />
-              <span>Pro Tips</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-blue-800">
-              <div>
-                <h4 className="font-semibold mb-2">📝 Better Input</h4>
-                <ul className="space-y-1 text-blue-700">
-                  <li>• Be specific about your requirements</li>
-                  <li>• Include context and target audience</li>
-                  <li>• Mention desired tone and style</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2">⚡ Best Results</h4>
-                <ul className="space-y-1 text-blue-700">
-                  <li>• Review and edit the generated content</li>
-                  <li>• Try different providers for variety</li>
-                  <li>• Combine multiple generations for best output</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2">🔧 AI Providers</h4>
-                <ul className="space-y-1 text-blue-700">
-                  <li>• OpenAI: Best for general content</li>
-                  <li>• Claude: Excellent for analysis</li>
-                  <li>• Gemini: Great for creative writing</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <Tips />
       </div>
     </div>
   );
