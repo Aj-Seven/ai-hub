@@ -27,6 +27,7 @@ export default function RootLayout({ children }) {
           name="viewport"
           content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0"
         />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="light">
