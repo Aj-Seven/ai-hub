@@ -69,19 +69,17 @@ export default function getStartedPage() {
   return (
     <>
       <section className="px-3 mb-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <h3 className="text-3xl font-bold text-slate-900 mb-2">
-              Choose Your AI Tool
-            </h3>
-            <p className="text-lg text-slate-600">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-4">
+            <h3 className="text-3xl font-bold">Choose Your AI Tool</h3>
+            <p className="text-lg">
               Select from our collection of powerful AI-powered writing
               assistants
             </p>
           </div>
 
           {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
+          <div className="flex flex-wrap justify-center gap-2 mb-4">
             {categories.map((category) => (
               <Button
                 key={category}
@@ -100,18 +98,18 @@ export default function getStartedPage() {
           </div>
 
           {/* Tools Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {filteredTools.map((tool) => (
               <Card
                 key={tool.id}
-                className={`group hover:shadow-md transition-all duration-300 cursor-pointer border-0 bg-white/60 backdrop-blur-sm hover:bg-white/80 ${
+                className={`group hover:shadow-md transition-all duration-300 cursor-pointer border hover:bg-white/10 ${
                   apiStatus === "offline" ? "opacity-50" : ""
                 }`}
                 onClick={() => handleToolSelect(tool.id)}
               >
                 <CardHeader className="pb-2">
                   <div className="flex items-start justify-between">
-                    <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg text-white group-hover:scale-110 transition-transform duration-300">
+                    <div className="p-3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg group-hover:scale-110 transition-transform duration-300">
                       {tool.icon}
                     </div>
                     <div className="flex flex-col gap-1">
@@ -133,12 +131,12 @@ export default function getStartedPage() {
                       )}
                     </div>
                   </div>
-                  <CardTitle className="text-lg text-slate-900 group-hover:text-blue-600 transition-colors">
+                  <CardTitle className="text-lg group-hover:text-blue-600 transition-colors">
                     {tool.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-slate-600 mb-4 leading-relaxed">
+                  <CardDescription className="mb-2 leading-relaxed">
                     {tool.description}
                   </CardDescription>
                   <div className="flex items-center justify-between">
