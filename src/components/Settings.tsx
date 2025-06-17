@@ -2,11 +2,6 @@
 
 import APIKeys from "./ApiKey";
 
-type ModelProvider = {
-  name: string;
-  available: boolean;
-};
-
 export default function Settings() {
   return (
     <div className="space-y-8">
