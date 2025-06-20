@@ -33,7 +33,6 @@ export default function RootLayout({ children }) {
         <ThemeProvider attribute="class" defaultTheme="light">
           <Navbar />
           {children}
-          <Footer />
           <Toaster />
         </ThemeProvider>
       </body>
