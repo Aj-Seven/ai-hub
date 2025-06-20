@@ -4,7 +4,23 @@ import { AIRequest, AIProvider } from "@/ai-providers/types";
 
 export const runtime = "edge";
 
+// Common CORS headers
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "content-type": "application/json",
+};
+
 export default async function handler(request: NextRequest) {
+  // Handle CORS preflight request
+  if (request.method === "OPTIONS") {
+    return new Response(null, {
+      status: 204,
+      headers: corsHeaders,
+    });
+  }
+
   switch (request.method) {
     case "POST":
       return await handlePost(request);
@@ -13,7 +29,7 @@ export default async function handler(request: NextRequest) {
     default:
       return new Response(JSON.stringify({ error: "Method Not Allowed" }), {
         status: 405,
-        headers: { "content-type": "application/json" },
+        headers: corsHeaders,
       });
   }
 }
@@ -23,29 +39,27 @@ async function handlePost(request: NextRequest): Promise<Response> {
     const body = await request.json();
     const { prompt, tool, options = {}, provider, apiKey } = body;
 
-    // Basic validations
     if (typeof prompt !== "string" || typeof tool !== "string") {
       return new Response(
         JSON.stringify({ error: 'Missing or invalid "prompt" or "tool"' }),
-        { status: 400, headers: { "content-type": "application/json" } }
+        { status: 400, headers: corsHeaders }
       );
     }
 
     if (!apiKey || typeof apiKey !== "string") {
       return new Response(
         JSON.stringify({ error: "Missing or invalid API key" }),
-        { status: 400, headers: { "content-type": "application/json" } }
+        { status: 400, headers: corsHeaders }
       );
     }
 
     if (!provider || typeof provider !== "string") {
       return new Response(
         JSON.stringify({ error: "Missing or invalid provider" }),
-        { status: 400, headers: { "content-type": "application/json" } }
+        { status: 400, headers: corsHeaders }
       );
     }
 
-    // Create AIService instance with a single provider
     const aiService = new AIService(provider as AIProvider, apiKey);
 
     const aiRequest: AIRequest = {
@@ -65,7 +79,7 @@ async function handlePost(request: NextRequest): Promise<Response> {
         provider: provider,
         usage: response.usage,
       }),
-      { status: 200, headers: { "content-type": "application/json" } }
+      { status: 200, headers: corsHeaders }
     );
   } catch (error) {
     console.error("POST Error:", error);
@@ -74,7 +88,7 @@ async function handlePost(request: NextRequest): Promise<Response> {
         error: "Failed to generate content",
         details: error instanceof Error ? error.message : "Unknown error",
       }),
-      { status: 500, headers: { "content-type": "application/json" } }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
@@ -86,13 +100,13 @@ async function handleGet(): Promise<Response> {
         success: true,
         status: "AI Hub API is running",
       }),
-      { status: 200, headers: { "content-type": "application/json" } }
+      { status: 200, headers: corsHeaders }
     );
   } catch (error) {
     console.error("GET Error:", error);
     return new Response(
       JSON.stringify({ error: "Failed to get provider status" }),
-      { status: 500, headers: { "content-type": "application/json" } }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
