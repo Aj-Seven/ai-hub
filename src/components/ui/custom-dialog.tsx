@@ -47,7 +47,7 @@ export function CustomDialog({
           {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
 
-        <div>{children}</div>
+        <div className="max-h-[90vh] overflow-auto">{children}</div>
 
         <DialogFooter>
           {footer}
