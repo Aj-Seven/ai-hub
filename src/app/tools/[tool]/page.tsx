@@ -228,7 +228,7 @@ export default function ToolPage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="border-b backdrop-blur-md sticky top-0 z-40">
+      <header className="border-b backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-3">
           <div className="flex items-center min-h-[72px]">
             <div className="flex items-center space-x-4">
@@ -258,10 +258,10 @@ export default function ToolPage() {
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-3 py-2">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Input Section */}
-          <Card className="border-1">
-            <CardHeader>
+          <Card className="border-1 p-2">
+            <CardHeader className="p-2 border-b">
               <CardTitle className="flex items-center space-x-2">
                 <Send className="h-5 w-5 text-blue-600" />
                 <span>Input</span>
@@ -270,7 +270,7 @@ export default function ToolPage() {
                 Provide the details for your content generation
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-4 p-2">
               <div className="space-y-2">
                 <Label htmlFor="input">{toolConfig.inputLabel}</Label>
                 <Textarea
@@ -356,9 +356,9 @@ export default function ToolPage() {
           </Card>
 
           {/* Output Section */}
-          <Card className="border-1">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
+          <Card className="border-1 p-2">
+            <CardHeader className="p-2">
+              <CardTitle className="flex items-center justify-between p-2">
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="h-5 w-5 text-green-600" />
                   <span>Output</span>
@@ -393,7 +393,7 @@ export default function ToolPage() {
                 Your generated content will appear here
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-2">
               {output ? (
                 <div className="space-y-4">
                   <div className="rounded-lg p-4 border min-h-[400px]">

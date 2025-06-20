@@ -3,14 +3,14 @@ import { Sparkles } from "lucide-react";
 
 export default function Tips() {
   return (
-    <Card className="mt-8">
+    <Card className="mt-4">
       <CardHeader>
         <CardTitle className="flex items-center space-x-2 text-blue-500">
           <Sparkles className="h-5 w-5" />
           <span>Pro Tips</span>
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-3">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <h4 className="font-semibold mb-2">📝 Better Input</h4>
