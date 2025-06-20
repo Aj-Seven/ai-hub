@@ -11,9 +11,8 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { CustomDialog } from "@/components/ui/custom-dialog";
 import { toast } from "sonner";
-import { Trash2, Pencil } from "lucide-react";
+import { Trash2, Pencil, Key } from "lucide-react";
 
 const providers = ["openai", "google", "cohere", "anthropic"];
 
@@ -61,16 +60,7 @@ export default function APIKeys() {
   };
 
   return (
-    <CustomDialog
-      title="Set API Key"
-      description="Store API keys securely in your browser (localStorage)"
-      triggerLabel="Set API Keys"
-      footer={
-        <Button type="button" onClick={handleSave}>
-          Save
-        </Button>
-      }
-    >
+    <>
       {/* List of stored API keys */}
       <div className="mb-4 space-y-2">
         <Label className="text-sm">Saved API Keys</Label>
@@ -81,7 +71,7 @@ export default function APIKeys() {
             {Object.entries(storedKeys).map(([prov, key]) => (
               <li
                 key={prov}
-                className="flex items-center justify-between bg-muted/30 px-3 py-2 rounded text-sm"
+                className="flex items-center justify-between bg-muted/90 py-2 rounded-md p-1 text-sm"
               >
                 <div className="flex flex-col">
                   <span className="font-medium">{prov}</span>
@@ -116,7 +106,7 @@ export default function APIKeys() {
       {/* Input form */}
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label>Provider</Label>
+          <Label>Select Provider</Label>
           <Select value={provider} onValueChange={setProvider}>
             <SelectTrigger>
               <SelectValue placeholder="Select provider" />
@@ -135,12 +125,25 @@ export default function APIKeys() {
           <Label htmlFor="apiKey">API Key</Label>
           <Input
             id="apiKey"
+            type="text"
             placeholder={`Enter API key for ${provider}`}
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
           />
         </div>
+
+        <div className="flex justify-start">
+          <Button
+            disabled={!apiKey}
+            variant="outline"
+            className=" cursor-pointer"
+            onClick={handleSave}
+          >
+            <Key className="h-4 w-4" />
+            Save API Key
+          </Button>
+        </div>
       </div>
-    </CustomDialog>
+    </>
   );
 }
