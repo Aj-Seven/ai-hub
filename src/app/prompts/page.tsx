@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import Contribution from "@/components/Contribution";
 
 interface Prompt {
   title: string;
@@ -119,6 +120,8 @@ export default function PromptLibraryPage() {
           No prompts found.
         </p>
       )}
+
+      <Contribution />
     </div>
   );
 }
