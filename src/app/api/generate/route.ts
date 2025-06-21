@@ -4,37 +4,16 @@ import { AIRequest, AIProvider } from "@/ai-providers/types";
 
 export const runtime = "edge";
 
-// Common CORS headers
+// Shared CORS headers
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  "content-type": "application/json",
+  "Content-Type": "application/json",
 };
 
-export default async function handler(request: NextRequest) {
-  // Handle CORS preflight request
-  if (request.method === "OPTIONS") {
-    return new Response(null, {
-      status: 204,
-      headers: corsHeaders,
-    });
-  }
-
-  switch (request.method) {
-    case "POST":
-      return await handlePost(request);
-    case "GET":
-      return await handleGet();
-    default:
-      return new Response(JSON.stringify({ error: "Method Not Allowed" }), {
-        status: 405,
-        headers: corsHeaders,
-      });
-  }
-}
-
-async function handlePost(request: NextRequest): Promise<Response> {
+// Handle POST request
+export async function POST(request: NextRequest): Promise<Response> {
   try {
     const body = await request.json();
     const { prompt, tool, options = {}, provider, apiKey } = body;
@@ -93,7 +72,8 @@ async function handlePost(request: NextRequest): Promise<Response> {
   }
 }
 
-async function handleGet(): Promise<Response> {
+// Handle GET request
+export async function GET(): Promise<Response> {
   try {
     return new Response(
       JSON.stringify({
@@ -109,4 +89,12 @@ async function handleGet(): Promise<Response> {
       { status: 500, headers: corsHeaders }
     );
   }
+}
+
+// Handle OPTIONS preflight
+export async function OPTIONS(): Promise<Response> {
+  return new Response(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
 }
