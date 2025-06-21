@@ -30,7 +30,7 @@ export default function Hero() {
               onClick={() => router.push("/get-started")}
             >
               Get Started
-              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-8 w-8 transition-transform group-hover:translate-x-1 animate-ping" />
             </Button>
           </div>
         </div>
