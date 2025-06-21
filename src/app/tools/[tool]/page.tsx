@@ -333,6 +333,14 @@ export default function ToolPage() {
                   </div>
                 )}
               </div>
+              {!availableProviders.length && (
+                <div className="bg-yellow-100 p-2 rounded-md border">
+                  <p className="text-sm text-yellow-700">
+                    No AI providers available. Please set your AI Provider API
+                    keys in Settings.
+                  </p>
+                </div>
+              )}
 
               <Button
                 onClick={handleGenerate}
