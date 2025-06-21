@@ -12,5 +12,7 @@ export function formatBytes(bytes: number) {
   return `${parseFloat((bytes / Math.pow(1024, i)).toFixed(2))} ${sizes[i]}`;
 }
 
-export const isMobile =
-  typeof window !== "undefined" && window.innerWidth < 768;
+export const isMobile = (): boolean => {
+  if (typeof window === "undefined") return false;
+  return window.innerWidth < 768;
+};
