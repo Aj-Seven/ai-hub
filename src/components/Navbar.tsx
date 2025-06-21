@@ -3,7 +3,16 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Settings2, Menu, X, Activity, ScrollText, Info } from "lucide-react";
+import {
+  Settings2,
+  Menu,
+  X,
+  Activity,
+  ScrollText,
+  Info,
+  Settings2Icon,
+  BotMessageSquare,
+} from "lucide-react";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import {
   Sheet,
@@ -15,6 +24,8 @@ import { Button } from "@/components/ui/button";
 import Settings from "./Settings";
 import { apiClient } from "@/lib/api-client";
 import Image from "next/image";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { CustomDialog } from "./ui/custom-dialog";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -26,7 +37,7 @@ export default function Navbar() {
   const checkApiStatus = async () => {
     try {
       const response = await apiClient.getStatus();
-      setApiStatus(response.success ? "online" : "offline");
+      setApiStatus(response.ollamaStatus ? "online" : "offline");
     } catch {
       setApiStatus("offline");
     }
@@ -37,25 +48,56 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
+    { name: "Chat", href: "/chat", icon: BotMessageSquare },
     { name: "Prompts", href: "/prompts", icon: ScrollText },
     { name: "About", href: "/about", icon: Info },
   ];
 
   const renderApiStatus = () => {
-    switch (apiStatus) {
-      case "online":
-        return <Activity className="h-4 w-4 text-green-500" />;
-      case "offline":
-        return <Activity className="h-4 w-4 text-red-500" />;
-      case "loading":
-      default:
-        return <Activity className="h-4 w-4 animate-spin text-gray-400" />;
-    }
+    const tooltip =
+      apiStatus === "online"
+        ? "Ollama is Running..."
+        : apiStatus === "offline"
+        ? "Ollama is currently offline."
+        : "Checking service status...";
+
+    const color =
+      apiStatus === "online"
+        ? "text-green-500"
+        : apiStatus === "offline"
+        ? "text-red-500"
+        : "text-gray-400";
+
+    return (
+      <Popover>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            aria-label="API Status"
+            className="focus:outline-none cursor-pointer"
+          >
+            <Activity
+              className={`h-6 w-6 ${
+                apiStatus === "loading" ? "animate-spin" : "animate-pulse"
+              } ${color}`}
+            />
+          </button>
+        </PopoverTrigger>
+
+        <PopoverContent
+          side="bottom"
+          align="center"
+          className="w-auto px-3 py-2 rounded-md shadow border z-90"
+        >
+          {tooltip}
+        </PopoverContent>
+      </Popover>
+    );
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b backdrop-blur-xl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="sticky top-0 z-40 w-full border-b bg-background">
+      <div className="max-w-7xl mx-auto px-3">
         <div className="flex items-center justify-between h-14">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-1">
@@ -115,7 +157,11 @@ export default function Navbar() {
             </div>
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="cursor-pointer"
+                >
                   {mobileOpen ? (
                     <X className="h-6 w-6" />
                   ) : (
@@ -144,20 +190,14 @@ export default function Navbar() {
                   ))}
 
                   <div className="pt-3 border-t border-muted">
-                    <Drawer>
-                      <DrawerTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start gap-2"
-                        >
-                          <Settings2 className="h-5 w-5" />
-                          Settings
-                        </Button>
-                      </DrawerTrigger>
-                      <DrawerContent className="p-4 max-w-3xl mx-auto">
-                        <Settings />
-                      </DrawerContent>
-                    </Drawer>
+                    <CustomDialog
+                      title="Settings"
+                      description="Manage settings for AI Hub"
+                      triggerLabel="Settings"
+                      icon={<Settings2Icon />}
+                    >
+                      <Settings />
+                    </CustomDialog>
                   </div>
                 </div>
               </SheetContent>
