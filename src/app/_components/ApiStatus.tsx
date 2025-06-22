@@ -60,7 +60,7 @@ export default function ApiStatus() {
     </div>
   );
 
-  const renderOnlineBanner = () => null; // Or add a green banner if needed
+  const renderOnlineBanner = () => null as any; // Or add a green banner if needed
 
   return (
     <>
