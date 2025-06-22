@@ -15,7 +15,7 @@ export default function Contribution() {
       </div>
       <div className="flex gap-3">
         <Link
-          href="https://github.com/aj-seven/aj-seven.me/issues/new"
+          href="https://github.com/aj-seven/ai-hub/issues/new"
           target="_blank"
         >
           <Button variant="outline" size="sm" className="flex gap-1">
@@ -23,10 +23,7 @@ export default function Contribution() {
             Create Issue
           </Button>
         </Link>
-        <Link
-          href="https://github.com/aj-seven/aj-seven.me/pulls"
-          target="_blank"
-        >
+        <Link href="https://github.com/aj-seven/ai-hub/pulls" target="_blank">
           <Button variant="secondary" size="sm">
             Contribute
           </Button>
