@@ -10,7 +10,7 @@ export default function Faq() {
     <section className="py-16 px-3">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-2">
+          <h2 className="text-4xl sm:text-4xl font-bold mb-2">
             Frequently Asked Questions
           </h2>
           <p>

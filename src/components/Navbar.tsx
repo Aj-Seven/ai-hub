@@ -178,7 +178,7 @@ export default function Navbar() {
                       key={link.name}
                       href={link.href}
                       onClick={() => setMobileOpen(false)}
-                      className={`flex items-center gap-1 p-1 text-base font-medium transition hover:bg-gray-800 rounded-md ${
+                      className={`flex items-center gap-1 p-1 text-base font-medium transition hover:bg-foreground/20 rounded-md ${
                         pathname === link.href
                           ? "text-blue-600"
                           : "text-gray-800 dark:text-gray-200"
