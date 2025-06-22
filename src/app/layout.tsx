@@ -1,7 +1,6 @@
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
 
 export default function RootLayout({ children }) {
@@ -10,30 +9,63 @@ export default function RootLayout({ children }) {
       <head>
         <meta charSet="UTF-8" />
         <meta name="author" content="Aj7" />
-        <title>AI Hub - Content Creation Platform</title>
+        <meta name="robots" content="index, follow" />
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+
+        <title>AI Hub – Chat with AI, Create Instantly</title>
+
         <meta
           name="description"
-          content="Powerful AI tools for email writing, tweet generation, grammar checking, and more. Create professional content in seconds."
+          content="AI Hub lets you chat with powerful AI models like Ollama for real-time assistance, content generation, and productivity tools—all in one place."
         />
+
+        {/* Open Graph Meta */}
+        <meta property="og:type" content="website" />
         <meta
           property="og:title"
-          content="AI Hub - Content Creation Platform"
+          content="AI Hub – Chat with AI, Create Instantly"
         />
         <meta
           property="og:description"
-          content="Powerful AI tools for email writing, tweet generation, grammar checking, and more. Create professional content in seconds."
+          content="Talk to advanced AI models, generate content, brainstorm ideas, and more using AI Hub—your smart assistant for creativity and productivity."
+        />
+        <meta property="og:url" content="https://ai-hubx.vercel.app" />
+        <meta
+          property="og:image"
+          content="https://ai-hubx.vercel.app/og-image.png"
+        />
+
+        {/* Twitter Card Meta */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="AI Hub – Chat with AI, Create Instantly"
         />
         <meta
+          name="twitter:description"
+          content="Real-time AI chat powered by Ollama. Create, assist, and innovate using AI Hub’s intelligent tools."
+        />
+        <meta
+          name="twitter:image"
+          content="https://ai-hubx.vercel.app/og-image.png"
+        />
+        <meta name="twitter:creator" content="@your_twitter_handle" />
+
+        {/* Viewport and Icons */}
+        <meta
           name="viewport"
-          content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0"
+          content="width=device-width, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0, user-scalable=yes"
         />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
+
       <body>
         <ThemeProvider attribute="class" defaultTheme="light">
           <Navbar />
           {children}
-          <Footer />
           <Toaster />
         </ThemeProvider>
       </body>

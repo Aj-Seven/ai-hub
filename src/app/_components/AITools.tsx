@@ -8,7 +8,7 @@ import {
   PenTool,
   Camera,
 } from "lucide-react";
-import { Tool } from "@/utils/types";
+import { Tool } from "@/types/tool";
 
 export const tools: Tool[] = [
   {

@@ -1,35 +1,8 @@
-export interface GenerateRequest {
-  prompt: string;
-  tool: string;
-  options?: {
-    tone?: string;
-    style?: string;
-    length?: string;
-    platform?: string;
-    maxTokens?: number;
-    temperature?: number;
-  };
-  provider?: string;
-  apiKey?: string;
-}
-
-export interface GenerateResponse {
-  success: boolean;
-  content?: string;
-  provider?: string;
-  usage?: {
-    promptTokens: number;
-    completionTokens: number;
-    totalTokens: number;
-  };
-  error?: string;
-  details?: string;
-}
-
-type Provider = {
-  value: string;
-  label: string;
-};
+import {
+  GenerateRequest,
+  GenerateResponse,
+  Provider,
+} from "@/types/api-client";
 
 class APIClient {
   private baseURL: string;
@@ -96,6 +69,7 @@ class APIClient {
   async getStatus(): Promise<{
     success: boolean;
     status?: string;
+    ollamaStatus?: boolean;
     providers?: string[];
     aiProviders?: Provider[];
     error?: string;
@@ -109,6 +83,13 @@ class APIClient {
 
     try {
       const response = await fetch(`${this.baseURL}/api/generate`);
+      const host = localStorage.getItem("ollama_host");
+      const ollamaResponse = await fetch(host, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Failed to get API status");
@@ -125,6 +106,7 @@ class APIClient {
       return {
         success: true,
         status: data.status,
+        ollamaStatus: ollamaResponse.ok,
         providers,
         aiProviders: aiProviders,
       };
