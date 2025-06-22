@@ -5,12 +5,6 @@ import {
 } from "@/types/api-client";
 
 class APIClient {
-  private baseURL: string;
-
-  constructor() {
-    this.baseURL = process.env.NEXT_PUBLIC_API_URL || "";
-  }
-
   async generate(request: GenerateRequest): Promise<GenerateResponse> {
     try {
       if (
@@ -37,7 +31,7 @@ class APIClient {
         },
       };
 
-      const response = await fetch(`${this.baseURL}/api/generate`, {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +76,7 @@ class APIClient {
     ];
 
     try {
-      const response = await fetch(`${this.baseURL}/api/generate`);
+      const response = await fetch("/api/generate");
       const host = localStorage.getItem("ollama_host");
       const ollamaResponse = await fetch(host, {
         method: "GET",
