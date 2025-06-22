@@ -19,8 +19,15 @@ export default function ChatPage() {
   const [editingTitleVal, setEditingTitleVal] = useState("");
 
   const [systemPrompt, setSystemPrompt] = useState<string>(
-    localStorage.getItem("systemMessage") || "You are a helpful assistant."
+    "You are a helpful assistant."
   );
+
+  useEffect(() => {
+    const stored = localStorage.getItem("systemMessage");
+    if (stored) {
+      setSystemPrompt(stored);
+    }
+  }, []);
 
   // Load from localStorage on mount
   useEffect(() => {

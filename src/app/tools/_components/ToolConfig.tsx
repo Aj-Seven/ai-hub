@@ -8,7 +8,7 @@ import {
   CheckCircle,
   RefreshCw,
 } from "lucide-react";
-import { ToolConfig } from "../../../utils/types";
+import { ToolConfig } from "@/types/tool";
 
 export const toolConfigs: Record<string, ToolConfig> = {
   "email-writer": {

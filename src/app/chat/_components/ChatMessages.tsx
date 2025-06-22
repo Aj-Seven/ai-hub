@@ -86,7 +86,7 @@ export function ChatMessages({ messages, loading }: ChatMessagesProps) {
                                 PreTag="div"
                                 className="rounded-md overflow-x-auto"
                                 wrapLongLines
-                                {...props}
+                                {...(props as any)}
                               >
                                 {codeText}
                               </SyntaxHighlighter>
