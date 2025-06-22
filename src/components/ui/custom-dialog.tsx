@@ -49,18 +49,7 @@ export function CustomDialog({
 
         <div className="max-h-[90vh] overflow-auto">{children}</div>
 
-        <DialogFooter>
-          {footer}
-          <DialogClose asChild>
-            <Button
-              variant="destructive"
-              size="default"
-              className="w-auto ml-auto cursor-pointer"
-            >
-              Close
-            </Button>
-          </DialogClose>
-        </DialogFooter>
+        <DialogFooter>{footer}</DialogFooter>
       </DialogContent>
     </Dialog>
   );
