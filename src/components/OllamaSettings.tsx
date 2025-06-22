@@ -1,27 +1,28 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 export default function OllamaSettings() {
-  const [ollamaHost, setOllamaHost] = useState(
-    localStorage.getItem("ollama_host") || ""
-  );
+  const [ollamaHost, setOllamaHost] = useState("");
 
+  // Load saved host from localStorage once on mount
   useEffect(() => {
-    localStorage.setItem("ollama_host", "http://localhost:11434");
-    if (ollamaHost) {
-      localStorage.setItem("ollama_host", ollamaHost);
-    }
-  }, [ollamaHost]);
+    const savedHost = localStorage.getItem("ollama_host");
+    setOllamaHost(savedHost || "http://localhost:11434");
+  }, []);
 
   const handleSaveHost = () => {
-    if (ollamaHost.trim()) {
-      localStorage.setItem("ollama_host", ollamaHost.trim());
+    const trimmedHost = ollamaHost.trim();
+
+    if (trimmedHost) {
+      localStorage.setItem("ollama_host", trimmedHost);
       toast.success("Ollama host saved successfully");
     } else {
-      toast.error("Please enter a valid host URL");
       localStorage.removeItem("ollama_host");
+      toast.error("Please enter a valid host URL");
     }
   };
 
