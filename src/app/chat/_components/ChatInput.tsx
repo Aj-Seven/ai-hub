@@ -34,6 +34,7 @@ export function ChatInput({
   setModel,
   sidebarProps,
   setSystemMessage,
+  apiStatus,
 }: ChatInputProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedModel, setSelectedModel] = useState<string>("");
@@ -100,7 +101,7 @@ export function ChatInput({
         e.preventDefault();
         if (input.trim()) onSend();
       }}
-      className="sticky bottom-0 z-10 w-full bg-background border-t px-3 pt-3 pb-2 rounded-t-2xl"
+      className="sticky bottom-0 w-full bg-background border-t px-3 pt-3 pb-2 rounded-t-2xl"
     >
       {/* Input Box */}
       <textarea
@@ -109,7 +110,7 @@ export function ChatInput({
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         placeholder="Type your message..."
-        disabled={loading || disabled}
+        disabled={loading || disabled || apiStatus === "offline"}
         rows={1}
         className="w-full resize-none overflow-auto max-h-[200px] rounded-md border border-input bg-background px-4 py-3 text-sm"
       />

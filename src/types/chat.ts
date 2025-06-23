@@ -14,6 +14,7 @@ export type Chat = {
 
 export interface ChatMessagesProps {
   messages: Message[];
+  apiStatus: string | null;
   loading: boolean;
 }
 
@@ -40,6 +41,7 @@ export interface ChatInputProps {
   disabled?: boolean;
   setModel: (model: string) => void;
   setSystemMessage: (msg: string) => void;
+  apiStatus: string | null;
   sidebarProps: {
     chats: Chat[];
     currentChatId: string | null;

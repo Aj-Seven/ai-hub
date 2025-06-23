@@ -5,11 +5,15 @@ import { ChatMessagesProps } from "@/types/chat";
 import ReactMarkdown from "react-markdown";
 import remarkEmoji from "remark-emoji";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { useEffect, useRef, useState } from "react";
 import { Clipboard, Check } from "lucide-react";
 
-export function ChatMessages({ messages, loading }: ChatMessagesProps) {
+export function ChatMessages({
+  messages,
+  apiStatus,
+  loading,
+}: ChatMessagesProps) {
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -18,9 +22,20 @@ export function ChatMessages({ messages, loading }: ChatMessagesProps) {
 
   return (
     <section className="flex-1 h-full relative overflow-y-auto px-2 py-6 bg-background">
-      {messages.length === 0 && !loading && (
+      {messages.length === 0 && !loading && apiStatus === "online" && (
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="text-xl italic">Let’s start a conversation...</span>
+        </div>
+      )}
+
+      {apiStatus === "offline" && (
+        <div className="fixed top-14 left-0 right-0 z-50">
+          <div className="bg-red-500 text-white text-center py-2 px-4 shadow-md">
+            <p className="font-semibold">⚠️ Ollama API is offline</p>
+            <p className="text-sm">
+              Please configure the API host in Settings.
+            </p>
+          </div>
         </div>
       )}
 
@@ -37,20 +52,17 @@ export function ChatMessages({ messages, loading }: ChatMessagesProps) {
                 )}
               >
                 {!isUser && (
-                  <div className="w-10 h-10 rounded-full bg-muted text-xs font-bold flex items-center justify-center mr-2 border shrink-0">
-                    AI
+                  <div className="w-10 h-10 rounded-full bg-muted text-xs font-bold flex items-center justify-center border shrink-0">
+                    AH
                   </div>
                 )}
-
                 <div
                   className={clsx(
-                    "px-3 py-2 rounded-lg",
+                    "px-2 py-2 rounded-md",
                     "max-w-full sm:max-w-[80%] w-fit",
                     "whitespace-pre-wrap break-words overflow-wrap break-word",
                     "overflow-hidden",
-                    isUser
-                      ? "bg-indigo-600 text-white"
-                      : "bg-gray-100 dark:bg-zinc-900 text-black dark:text-white"
+                    isUser ? "bg-indigo-600 text-white" : ""
                   )}
                 >
                   <div className="prose dark:prose-invert max-w-full prose-pre:overflow-x-auto prose-code:break-words relative">
@@ -79,38 +91,43 @@ export function ChatMessages({ messages, loading }: ChatMessagesProps) {
                           };
 
                           return match ? (
-                            <div className="relative group">
-                              <SyntaxHighlighter
-                                style={oneDark}
-                                language={match[1]}
-                                PreTag="div"
-                                className="rounded-md overflow-x-auto"
-                                wrapLongLines
-                                {...(props as any)}
-                              >
-                                {codeText}
-                              </SyntaxHighlighter>
+                            <div className="flex flex-row items-center rounded-md">
+                              <div className="flex flex-col border rounded-md bg-background overflow-x-auto">
+                                <div className="flex items-center justify-between px-1 border-b">
+                                  <span className="text-sm font-mono">
+                                    {match[1]}
+                                  </span>
+                                  <button
+                                    onClick={handleCopy}
+                                    className="opacity-70 hover:opacity-100 transition-opacity p-1 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+                                    aria-label="Copy code"
+                                    type="button"
+                                  >
+                                    {copied ? (
+                                      <Check size={16} />
+                                    ) : (
+                                      <Clipboard size={16} />
+                                    )}
+                                  </button>
+                                </div>
 
-                              <div className="absolute top-0 left-0 text-xs bg-background/50 px-1 py-0.5 rounded">
-                                {match[1].toUpperCase()}
+                                <div className="overflow-x-auto">
+                                  <SyntaxHighlighter
+                                    style={atomDark}
+                                    language={match[1]}
+                                    PreTag="div"
+                                    className="rounded-md"
+                                    wrapLongLines
+                                    {...(props as any)}
+                                  >
+                                    {codeText}
+                                  </SyntaxHighlighter>
+                                </div>
                               </div>
-
-                              <button
-                                onClick={handleCopy}
-                                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-sm bg-black/70 hover:bg-black text-white p-1 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                aria-label="Copy code"
-                                type="button"
-                              >
-                                {copied ? (
-                                  <Check size={16} />
-                                ) : (
-                                  <Clipboard size={16} />
-                                )}
-                              </button>
                             </div>
                           ) : (
                             <code
-                              className="bg-black/10 px-1 py-0.5 rounded break-words text-sm"
+                              className="bg-black/10 px-1 rounded break-words text-sm"
                               {...props}
                             >
                               {codeText}
@@ -123,12 +140,6 @@ export function ChatMessages({ messages, loading }: ChatMessagesProps) {
                     </ReactMarkdown>
                   </div>
                 </div>
-
-                {isUser && (
-                  <div className="w-10 h-10 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center ml-1 shrink-0 border">
-                    U
-                  </div>
-                )}
               </div>
             </div>
           );

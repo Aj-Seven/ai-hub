@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { ChatMessages } from "./_components/ChatMessages";
 import { ChatInput } from "./_components/ChatInput";
 import { Chat, Message } from "@/types/chat";
+import { apiClient } from "@/lib/api-client";
 
 export default function ChatPage() {
   const [chats, setChats] = useState<Chat[]>([]);
@@ -21,25 +22,40 @@ export default function ChatPage() {
   const [systemPrompt, setSystemPrompt] = useState<string>(
     "You are a helpful assistant."
   );
+  const [apiStatus, setApiStatus] = useState<string | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem("systemMessage");
-    if (stored) {
-      setSystemPrompt(stored);
-    }
+    const loadFromLocalStorage = async () => {
+      const stored = localStorage.getItem("systemMessage");
+      if (stored) {
+        setSystemPrompt(stored);
+      }
+
+      const saved = localStorage.getItem("savedChats");
+      if (saved) {
+        const data: Chat[] = JSON.parse(saved);
+        setChats(data);
+        if (data.length > 0) {
+          setCurrentChatId(data[0].id);
+          setMessages(data[0].messages);
+        }
+      }
+    };
+
+    loadFromLocalStorage();
   }, []);
 
-  // Load from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem("savedChats");
-    if (saved) {
-      const data: Chat[] = JSON.parse(saved);
-      setChats(data);
-      if (data.length > 0) {
-        setCurrentChatId(data[0].id);
-        setMessages(data[0].messages);
+    const checkApiStatus = async () => {
+      try {
+        const response = await apiClient.getStatus();
+        setApiStatus(response.ollamaStatus ? "online" : "offline");
+      } catch {
+        setApiStatus("offline");
       }
-    }
+    };
+
+    checkApiStatus();
   }, []);
 
   // Helpers
@@ -191,7 +207,11 @@ export default function ChatPage() {
 
   return (
     <div className="flex max-w-6xl mx-auto flex-col min-h-screen bg-background">
-      <ChatMessages messages={messages} loading={loading} />
+      <ChatMessages
+        messages={messages}
+        apiStatus={apiStatus}
+        loading={loading}
+      />
 
       <ChatInput
         setModel={setModel}
@@ -201,6 +221,7 @@ export default function ChatPage() {
         onSend={sendMessage}
         stopStream={stopStream}
         setSystemMessage={setSystemPrompt}
+        apiStatus={apiStatus}
         sidebarProps={{
           chats,
           currentChatId,
