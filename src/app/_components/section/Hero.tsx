@@ -13,7 +13,7 @@ export default function Hero() {
         <div className="w-full lg:w-1/2 flex flex-col justify-center">
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
             Your AI Hub for <br className="hidden md:inline" />
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="underline text-blue-500 underline-offset-8">
               Chat & Content Creation
             </span>
           </h1>
