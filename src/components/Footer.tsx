@@ -18,9 +18,7 @@ export default function Footer() {
                   height={42}
                 />
               </div>
-              <span className="text-2xl mt-auto font-bold bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
-                AI Hub
-              </span>
+              <span className="text-2xl mt-auto font-bold">AI Hub</span>
             </Link>
           </div>
         </div>
@@ -33,7 +31,7 @@ export default function Footer() {
         </p>
 
         {/* Footer Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 ">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 ">
           <div>
             <h3 className="font-extrabold mb-2">AI Tools</h3>
             <p>Email Writer</p>

@@ -49,9 +49,7 @@ export default function Navbar() {
                 height={42}
               />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
-              AI Hub
-            </span>
+            <span className="text-xl font-bold ">AI Hub</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -80,7 +78,11 @@ export default function Navbar() {
             {/* Settings Drawer */}
             <Drawer>
               <DrawerTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button
+                  variant="outline"
+                  size="default"
+                  className="cursor-pointer"
+                >
                   <Settings2 />
                 </Button>
               </DrawerTrigger>
@@ -99,7 +101,7 @@ export default function Navbar() {
               <SheetTrigger asChild>
                 <Button
                   variant="outline"
-                  size="icon"
+                  size="default"
                   className="cursor-pointer"
                 >
                   {mobileOpen ? (
