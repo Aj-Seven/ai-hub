@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  <img src="public/assets/logo-nobg.png"  height="128">
+  <h2 align="center"><a href="https://ai-hubx.vercel.app"> ai-hub </a></h2>
+  <p align="center">Your AI Hub for Chat & Content Creation.<p>
+  <p align="center">
+   <a href='#'><img src=https://img.shields.io/badge/Maintained%3F-yes-green.svg></img><a/>
+<img src="https://deploy-badge.vercel.app/vercel/ai-hubx" alt="Vercel Deploy"></img>
+  </p>
+</p>
 
-## Getting Started
+## 🚀 Features
 
-First, run the development server:
+- 💬 **Chat Interface** — Converse with AI models like GPT, Claude, LLaMA (Ollama), Gemini.
+- 📨 **Email Generator** — Instantly write professional or casual emails with tone control.
+- 🐦 **Tweet Generator** — Generate engaging tweets and social posts in seconds.
+- 📝 **Blog Writer** — Create SEO-ready blog drafts tailored to your prompts.
+- ✍️ **Grammar Fixer** — Instantly clean and correct your writing.
+- 🔁 **Prompt Playground** — Test prompts across different LLM providers with one click.
+- 🧩 **Multi-model support** — Easily switch between local (Ollama) and cloud-based models.
+- 🔐 **Privacy-first** — Your API keys are stored in your browser only. Your data is yours.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Next.js** — API routes & frontend
+- **TypeScript** — Safe & modern coding experience
+- **Tailwind CSS** — Fully responsive and accessible UI
+- **ShadCN/UI** — UI components for modern UX
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📦 Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Clone this repo**  
+   ```bash
+   git clone https://github.com/aj-seven/ai-hub.git
+   cd ai-hub
+   ```
 
-## Learn More
+2. **Install dependencies**  
+   ```bash
+   pnpm install
+   # or
+   yarn install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Run the dev server**  
+   ```bash
+   pnpm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. **Access the app**  
+   Visit [http://localhost:3000](http://localhost:3000)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Local Model with Ollama
 
-## Deploy on Vercel
+To run local models with Ollama:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Install Ollama: https://ollama.com
+- Start a model: `ollama run llama3.2`
+- The app auto-connects if Ollama is running on `http://localhost:11434`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🧑‍💻 Contributing
+
+Feel free to fork the repo, suggest changes, or submit pull requests.
+Contributions are welcome!
+
+## 🛡 License
+
+MIT © 2025 AI Hub Team
