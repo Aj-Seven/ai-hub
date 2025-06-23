@@ -62,7 +62,7 @@ export default function ToolPage() {
     try {
       const response = await apiClient.getStatus();
 
-      if (response.success && response.providers && response.aiProviders) {
+      if (response.providers && response.aiProviders) {
         const filteredProviders: Provider[] = response.aiProviders.filter((p) =>
           response.providers?.includes(p.value)
         );

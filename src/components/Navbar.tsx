@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Settings2,
   Menu,
   X,
-  Activity,
   ScrollText,
   Info,
   Settings2Icon,
@@ -22,78 +21,19 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Settings from "./Settings";
-import { apiClient } from "@/lib/api-client";
 import Image from "next/image";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { CustomDialog } from "./ui/custom-dialog";
+import ApiStatus from "./ApiStatus";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [apiStatus, setApiStatus] = useState<"loading" | "online" | "offline">(
-    "loading"
-  );
-
-  const checkApiStatus = async () => {
-    try {
-      const response = await apiClient.getStatus();
-      setApiStatus(response.ollamaStatus ? "online" : "offline");
-    } catch {
-      setApiStatus("offline");
-    }
-  };
-
-  useEffect(() => {
-    checkApiStatus();
-  }, []);
 
   const navLinks = [
     { name: "Chat", href: "/chat", icon: BotMessageSquare },
     { name: "Prompts", href: "/prompts", icon: ScrollText },
     { name: "About", href: "/about", icon: Info },
   ];
-
-  const renderApiStatus = () => {
-    const tooltip =
-      apiStatus === "online"
-        ? "Ollama is Running..."
-        : apiStatus === "offline"
-        ? "Ollama is currently offline."
-        : "Checking service status...";
-
-    const color =
-      apiStatus === "online"
-        ? "text-green-500"
-        : apiStatus === "offline"
-        ? "text-red-500"
-        : "text-gray-400";
-
-    return (
-      <Popover>
-        <PopoverTrigger asChild>
-          <button
-            type="button"
-            aria-label="API Status"
-            className="focus:outline-none cursor-pointer"
-          >
-            <Activity
-              className={`h-6 w-6 ${
-                apiStatus === "loading" ? "animate-spin" : "animate-pulse"
-              } ${color}`}
-            />
-          </button>
-        </PopoverTrigger>
-
-        <PopoverContent
-          side="bottom"
-          align="center"
-          className="w-auto px-3 py-2 rounded-md shadow border z-90"
-        >
-          {tooltip}
-        </PopoverContent>
-      </Popover>
-    );
-  };
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b bg-background">
@@ -109,9 +49,7 @@ export default function Navbar() {
                 height={42}
               />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
-              AI Hub
-            </span>
+            <span className="text-xl font-bold ">AI Hub</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -135,12 +73,16 @@ export default function Navbar() {
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-4">
             {/* API status */}
-            {renderApiStatus()}
+            <ApiStatus />
 
             {/* Settings Drawer */}
             <Drawer>
               <DrawerTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button
+                  variant="outline"
+                  size="default"
+                  className="cursor-pointer"
+                >
                   <Settings2 />
                 </Button>
               </DrawerTrigger>
@@ -153,13 +95,13 @@ export default function Navbar() {
           {/* Mobile Menu */}
           <div className="md:hidden flex items-center ">
             <div className="mr-2 flex items-center justify-center">
-              {renderApiStatus()}
+              <ApiStatus />
             </div>
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <Button
                   variant="outline"
-                  size="icon"
+                  size="default"
                   className="cursor-pointer"
                 >
                   {mobileOpen ? (

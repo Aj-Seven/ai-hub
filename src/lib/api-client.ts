@@ -75,41 +75,53 @@ class APIClient {
       { label: "Cohere", value: "cohere" },
     ];
 
+    // Get all available providers
+    const providers = Object.keys(localStorage)
+      .filter((key) => key.startsWith("api_key_"))
+      .map((key) => key.replace("api_key_", ""))
+      .filter((provider) => aiProviders.map((p) => p.value).includes(provider));
+
+    let status: string | undefined = undefined;
+    let ollamaStatus: boolean | undefined = undefined;
+    let errorMessages: string[] = [];
+
     try {
       const response = await fetch("/api/generate");
-      const host = localStorage.getItem("ollama_host");
-      const ollamaResponse = await fetch(host, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to get API status");
+      if (response.ok) {
+        const data = await response.json();
+        status = data.status;
+      } else {
+        errorMessages.push("Failed to get /api/generate status");
       }
-
-      const providers = Object.keys(localStorage)
-        .filter((key) => key.startsWith("api_key_"))
-        .map((key) => key.replace("api_key_", ""))
-        .filter((provider) =>
-          aiProviders.map((p) => p.value).includes(provider)
-        );
-
-      const data = await response.json();
-      return {
-        success: true,
-        status: data.status,
-        ollamaStatus: ollamaResponse.ok,
-        providers,
-        aiProviders: aiProviders,
-      };
-    } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
-      };
+    } catch (err) {
+      errorMessages.push("Fetch to /api/generate failed");
     }
+
+    try {
+      const host = localStorage.getItem("ollama_host");
+      if (host) {
+        const ollamaResponse = await fetch(host, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        ollamaStatus = ollamaResponse.ok;
+      } else {
+        errorMessages.push("Ollama host not found");
+      }
+    } catch (err) {
+      errorMessages.push("Fetch to Ollama host failed");
+    }
+
+    return {
+      success: errorMessages.length === 0,
+      status,
+      ollamaStatus,
+      providers,
+      aiProviders,
+      error: errorMessages.length > 0 ? errorMessages.join("; ") : undefined,
+    };
   }
 }
 
